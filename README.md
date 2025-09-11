@@ -10,20 +10,34 @@ Este proyecto es un **mini stack DevOps completo**, diseñado para mostrar habil
 ```
 devops-showcase/
 ├── app/                      # Código fuente de la aplicación Flask
-│   └── main.py
+│   ├── Dockerfile
+│   ├── app.py
+│   ├── requirements.txt
+│   └── tests/                # Tests de la aplicación
+│       └── test_app.py
 ├── charts/myapp/             # Helm chart para desplegar la app
 │   ├── Chart.yaml
 │   ├── values.yaml
 │   └── templates/
-├── manifests/                # Manifiestos para ArgoCD y Kubernetes
-│   └── application.yaml
-├── docs/
-│   └── dashboards/           # Dashboards de Grafana
-│       ├── myapp-dashboard.json
-│       └── nodes-metrics.json
+├── argocd/                   # Manifiestos ArgoCD
+│   └── myapp-application.yaml
+├── docs/                     # Documentación y dashboards
+│   ├── kubernetes-overview.json
+│   └── myapp-dashboard.json
+├── infra/terraform/          # Configuración de Terraform
+│   ├── .terraform.lock.hcl
+│   ├── backend.tf
+│   ├── plan.tfplan
+│   ├── provider.tf
+│   └── terraform.tfstate
+├── workflows/                # GitHub Actions / CI-CD
+│   ├── build-and-push.yml
+│   └── ci.yml
 ├── runbook.md                # Guía de despliegue y troubleshooting
+├── architecture.md           # Documentación de arquitectura
 ├── README.md                 # Este archivo
 └── .gitignore
+
 ```
 
 ---
