@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp
+  namespace: argocd   # el namespace donde corre ArgoCD
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/Hector-Sanchez19/devops-showcase'
+    path: charts/myapp
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default   # donde quieres que se despliegue la app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,98 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "type": "dashboard",
+        "enable": true
+      }
+    ]
+  },
+  "description": "Dashboard de métricas para MyApp (Flask + Prometheus)",
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Requests totales por pod",
+      "targets": [
+        {
+          "expr": "sum(rate(http_requests_total{app_kubernetes_io_name=\"myapp\"}[1m])) by (pod)",
+          "legendFormat": "{{pod}}",
+          "refId": "A"
+        }
+      ],
+      "xaxis": { "show": true },
+      "yaxis": { "show": true, "label": "requests/s" },
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "type": "graph",
+      "title": "Latencia promedio",
+      "targets": [
+        {
+          "expr": "rate(http_request_duration_seconds_sum{app_kubernetes_io_name=\"myapp\"}[1m]) / rate(http_request_duration_seconds_count{app_kubernetes_io_name=\"myapp\"}[1m])",
+          "legendFormat": "latency",
+          "refId": "B"
+        }
+      ],
+      "xaxis": { "show": true },
+      "yaxis": { "show": true, "label": "segundos" },
+      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "type": "graph",
+      "title": "Errores 5xx por pod",
+      "targets": [
+        {
+          "expr": "sum(rate(http_requests_total{app_kubernetes_io_name=\"myapp\",status=~\"5..\"}[1m])) by (pod)",
+          "legendFormat": "{{pod}}",
+          "refId": "C"
+        }
+      ],
+      "xaxis": { "show": true },
+      "yaxis": { "show": true, "label": "errores/s" },
+      "gridPos": { "x": 0, "y": 8, "w": 12, "h": 8 }
+    },
+    {
+      "type": "graph",
+      "title": "Uso de CPU por pod",
+      "targets": [
+        {
+          "expr": "rate(container_cpu_usage_seconds_total{pod=~\"myapp.*\"}[1m])",
+          "legendFormat": "{{pod}}",
+          "refId": "D"
+        }
+      ],
+      "xaxis": { "show": true },
+      "yaxis": { "show": true, "label": "CPU cores" },
+      "gridPos": { "x": 12, "y": 8, "w": 12, "h": 8 }
+    },
+    {
+      "type": "graph",
+      "title": "Uso de memoria por pod",
+      "targets": [
+        {
+          "expr": "container_memory_usage_bytes{pod=~\"myapp.*\"}",
+          "legendFormat": "{{pod}}",
+          "refId": "E"
+        }
+      ],
+      "xaxis": { "show": true },
+      "yaxis": { "show": true, "label": "bytes" },
+      "gridPos": { "x": 0, "y": 16, "w": 24, "h": 8 }
+    }
+  ],
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": ["myapp", "flask", "prometheus"],
+  "templating": { "list": [] },
+  "time": { "from": "now-1h", "to": "now" },
+  "timepicker": {},
+  "timezone": "",
+  "title": "MyApp Dashboard",
+  "version": 1
+}
